@@ -11,9 +11,6 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Display AWS Region
-        run: echo "Using region us-east-1"
-
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -24,14 +21,8 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
-      - name: Terraform Version
-        run: terraform version
-
       - name: Terraform Init
-        run: terraform init
-
-      - name: Terraform State List
-        run: terraform state list
+        run: terraform init -reconfigure
 
       - name: Terraform Validate
         run: terraform validate
@@ -40,4 +31,4 @@ jobs:
         run: terraform plan -var="key_name=${{ secrets.KEY_NAME }}"
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve -var=
+        run: terraform apply -auto-approve -var="key_name=${{ secrets.KEY_NAME }}"

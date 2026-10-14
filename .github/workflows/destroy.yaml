@@ -24,5 +24,8 @@ jobs:
       - name: Terraform Init
         run: terraform init
 
+      - name: Show Terraform State
+        run: terraform state list || true
+
       - name: Terraform Destroy
         run: terraform destroy -auto-approve -var="key_name=${{ secrets.KEY_NAME }}"
